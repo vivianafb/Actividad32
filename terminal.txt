@@ -1,0 +1,241 @@
+Last login: Thu Dec 20 21:31:45 on ttys000
+MacBook-Air-de-Viviana:~ viviana$ psql
+psql (10.6, server 11.0)
+WARNING: psql major version 10, server major version 11.
+         Some psql features might not work.
+Type "help" for help.
+
+viviana=# CREATE DATABASE pintagram2;
+CREATE DATABASE
+viviana=# \c pintagram2
+psql (10.6, server 11.0)
+WARNING: psql major version 10, server major version 11.
+         Some psql features might not work.
+You are now connected to database "pintagram2" as user "viviana".
+pintagram2=# CREATE TABLE users (id SERIAL PRIMARY KEY, first_name VARCHAR(30), last_name VARCHAR(30), email VARCHAR(30));
+CREATE TABLE
+pintagram2=# CREATE TABLE images (id SERIAL PRIMARY KEY, name VARCHAR(30), type VARCHAR(30), size FLOAT, owner_id INTEGER REFERENCES users(id));
+CREATE TABLE
+pintagram2=# CREATE TABLE EvaluatedImage (id SERIAL PRIMARY KEY, user_id INT REFERENCES users(id), image_id INT REFERENCES images(id), liked BOOLEAN);
+CREATE TABLE
+pintagram2=# CREATE TABLE tag (id SERIAL PRIMARY KEY, name VARCHAR(30));
+CREATE TABLE
+pintagram2=# CREATE TABLE Tagging (id SERIAL PRIMARY KEY, tag_id INT REFERENCES tag(id), image_id INT REFERENCES images(id));
+CREATE TABLE
+pintagram2=# INSERT INTO users (first_name, last_name, email) VALUES ('Viviana', 'Fajardo', 'vivianafb15@gmail.com');
+INSERT 0 1
+pintagram2=# INSERT INTO users (first_name, last_name, email) VALUES ('Octavio', 'Guajardo', 'octavio19@gmail.com');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Gatito', 'jpg', '200', '1');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Perrito', 'jpg', '300', '1');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Paisaje', 'jpg', '100', '2');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Arbol', 'jpg', '100', '2');
+INSERT 0 1
+pintagram2=# INSERT INTO users (first_name, last_name, email) VALUES ('Soledad', 'Guajardo', 'osole19@gmail.com');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Polera', 'jpg', '150', '3');
+INSERT 0 1
+pintagram2=# INSERT INTO images (name, type, size, owner_id) VALUES ('Pantalon', 'jpg', '150', '3');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('1', '1' ,'1', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('2', '2' ,'1', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('3', '3' ,'1', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('4', '1' ,'2', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('5', '2' ,'2', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('6', '3' ,'2', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('7', '1' ,'3', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('8', '2' ,'3', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('9', '3' ,'3', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('10', '1' ,'4', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('11', '1' ,'5', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('12', '1' ,'6', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('13', '2' ,'4', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('14', '2' ,'5', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('15', '2' ,'6', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('16', '3' ,'4', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('17', '3' ,'5', 'true');
+INSERT 0 1
+pintagram2=# INSERT INTO EvaluatedImage (id, user_id, image_id, liked) VALUES ('18', '3' ,'6', 'true');
+INSERT 0 1
+pintagram2=# SELECT * FROM EvaluatedImage;
+ id | user_id | image_id | liked 
+----+---------+----------+-------
+  1 |       1 |        1 | t
+  2 |       2 |        1 | t
+  3 |       3 |        1 | t
+  4 |       1 |        2 | t
+  5 |       2 |        2 | t
+  6 |       3 |        2 | t
+  7 |       1 |        3 | t
+  8 |       2 |        3 | t
+  9 |       3 |        3 | t
+ 10 |       1 |        4 | t
+ 11 |       1 |        5 | t
+ 12 |       1 |        6 | t
+ 13 |       2 |        4 | t
+ 14 |       2 |        5 | t
+ 15 |       2 |        6 | t
+ 16 |       3 |        4 | t
+ 17 |       3 |        5 | t
+ 18 |       3 |        6 | t
+(18 rows)
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('1', 'Miau');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('2', 'Cat');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('3', 'TheBest');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('4', 'Guau');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('5', 'BestFriend');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('6', 'Dog');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('7', 'Cerro');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('8', 'Animals');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('9', 'Beautiful');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('10', 'Tree');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('11', 'Campo');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('12', 'Oto??o');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('13', 'T-Shirt');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('14', 'Moda');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('15', 'Estilo');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('16', 'Estilo');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('17', 'NuevaMODA');
+INSERT 0 1
+pintagram2=# INSERT INTO Tag (id, name) VALUES ('18', 'Americanino');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('1', '1', '1');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('2', '2', '1');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('3', '3', '1');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('4', '4', '2');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('5', '5', '2');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('6', '6', '2');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('7', '7', '3');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('8', '8', '3');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('9', '9', '3');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('10', '10', '4');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('11', '11', '4');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('12', '12', '4');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('13', '13', '5');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('14', '14', '5');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('15', '15', '5');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('16', '16', '6');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('17', '17', '6');
+INSERT 0 1
+pintagram2=# INSERT INTO Tagging (id, tag_id, image_id) VALUES ('18', '18', '6');
+INSERT 0 1
+pintagram2=# SELECT * FROM Tagging;
+ id | tag_id | image_id 
+----+--------+----------
+  1 |      1 |        1
+  2 |      2 |        1
+  3 |      3 |        1
+  4 |      4 |        2
+  5 |      5 |        2
+  6 |      6 |        2
+  7 |      7 |        3
+  8 |      8 |        3
+  9 |      9 |        3
+ 10 |     10 |        4
+ 11 |     11 |        4
+ 12 |     12 |        4
+ 13 |     13 |        5
+ 14 |     14 |        5
+ 15 |     15 |        5
+ 16 |     16 |        6
+ 17 |     17 |        6
+ 18 |     18 |        6
+(18 rows)
+
+pintagram2=# SELECT name,count(EvaluatedImage.id) as "Cantidad de likes" FROM Images,EvaluatedImage WHERE Images.id = Image_id GROUP BY (Images.name);
+   name   | Cantidad de likes 
+----------+-------------------
+ Paisaje  |                 3
+ Pantalon |                 3
+ Perrito  |                 3
+ Arbol    |                 3
+ Polera   |                 3
+ Gatito   |                 3
+(6 rows)
+
+pintagram2=# SELECT first_name, name FROM Users, Images WHERE Users.id = Images.owner_id GROUP BY (users.first_name,Images.name);
+first_name |   name   
+------------+----------
+ Octavio    | Paisaje
+ Soledad    | Polera
+ Viviana    | Perrito
+ Octavio    | Arbol
+ Soledad    | Pantalon
+ Viviana    | Gatito
+(6 rows)
+
+pintagram2=# SELECT name, count(Tagging.id) as "Cantidad de tags" FROM Tag, Tagging WHERE Tag.id = Tagging.id GROUP BY (name,tag_id);
+    name     | Cantidad de tags 
+-------------+------------------
+ Beautiful   |                1
+ Dog         |                1
+ Guau        |                1
+ Americanino |                1
+ Estilo      |                1
+ BestFriend  |                1
+ Miau        |                1
+ Campo       |                1
+ Otoño       |                1
+ Cerro       |                1
+ Animals     |                1
+ T-Shirt     |                1
+ Moda        |                1
+ Estilo      |                1
+ NuevaMODA   |                1
+ Cat         |                1
+ Tree        |                1
+ TheBest     |                1
+(18 rows)
+
+pintagram2=# 
